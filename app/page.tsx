@@ -5,6 +5,7 @@ import functions from "./functions/functions";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { allDataType } from "./type";
+import { useRouter } from "next/navigation";
 export default function Home() {
   const { makeDayData } = functions();
   const didMount = useRef(false);
@@ -21,16 +22,8 @@ export default function Home() {
     date: date.getDate(),
     day: date.getDay(),
   }
-  const icon = {
-    hidden: {
-      pathLength: 0,
-      fill: "rgba(255, 255, 255, 0)"
-    },
-    visible: {
-      pathLength: 1,
-      fill: "rgba(255, 255, 255, 1)"
-    }
-  }
+
+  const router = useRouter();
 
   console.log(dayData);
   useEffect(() => {
@@ -47,10 +40,11 @@ export default function Home() {
       localStorage.setItem("dayData", JSON.stringify(dayData));
       console.log("saved");
     }
+    router.push("/months?year=" + year + "&month=" + month);
   }, [dayData])
   return (
     <div className="grid grid-rows-12 min-h-[100svh]">
-      <div className="row-span-1 bg-slate-100 grid grid-cols-3">
+      {/* <div className="row-span-1 bg-slate-100 grid grid-cols-3">
         <div className=" relative">
           <p className=" absolute bottom-0 text-xl">{year}</p>
         </div>
@@ -61,7 +55,7 @@ export default function Home() {
           monthData={dayData[year - 2024].months[month - 1]}
           isDayClicked={false}
           setIsDayClicked={() => (false)} />}
-      </div>
+      </div> */}
     </div>
   );
 }

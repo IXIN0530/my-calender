@@ -6,6 +6,7 @@ import functions from "../functions/functions";
 import Month from "../components/month";
 import { useRouter } from "next/navigation";
 import { easeInOut, easeOut, motion } from "framer-motion";
+import Link from "next/link";
 export default function Home() {
   const router = useSearchParams();
   const realRouter = useRouter();
@@ -69,7 +70,7 @@ export default function Home() {
       transition={{ duration: 0.3, ease: easeInOut }}>
       <div className="row-span-1 bg-slate-100 grid grid-cols-3">
         <div className=" relative">
-          <p className=" absolute bottom-0 text-xl">{year}</p>
+          <Link href={"/years"} className=" absolute bottom-0 text-xl">{year}</Link>
         </div>
         <p className="my-auto text-3xl text-center">{month}月</p>
       </div>
