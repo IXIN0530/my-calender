@@ -2,8 +2,6 @@
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 export default function Home() {
-  const router = useSearchParams();
-  const year = router.get("year3");
   const years: number[] = [];
   for (let i = 2024; i < 2043; i++) {
     years.push(i);
