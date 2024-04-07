@@ -21,12 +21,12 @@ const MiniDay = ({ day, month, year }: DayProps) => {
   const weeks = getWeeksInMonth(year, month);
   const className = `text-center rounded-lg  grid grid-rows-7 shadow-md `;
   return (
-    <div className={className} style={{ height: (250 / (3 * weeks)) + "svh" }}>
+    <div className={` absolute top-0 bottom-0 left-0 right-0 text-center rounded-lg  grid grid-rows-7 shadow-md `} style={{}}>
       {day.date}
       <div></div>
-      <p className="bg-red-300 ">hello</p>
+      <p className="bg-red-300 text-sm ">hello</p>
       {day.plans.map((plan) => {
-        return <p>{plan.title}</p>
+        return <p className="bg-red-300 text-sm">{plan.title}</p>
       })}
     </div>
   )

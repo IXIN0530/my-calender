@@ -8,6 +8,7 @@ import Month from "../components/month";
 import { useRouter } from "next/navigation";
 import { easeInOut, easeOut, motion } from "framer-motion";
 import Link from "next/link";
+import Footer from "../components/footer";
 
 export default function Home() {
 
@@ -18,25 +19,28 @@ export default function Home() {
   //ページ遷移関連
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
+  //footer関連（特に予定追加モーダルボタン）
+  const [isAddPlanClicked, setIsAddPlanClicked] = useState<boolean>(false);
+
   const [isDayClicked, setIsDayClicked] = useState<boolean>(false);
   const { makeDayData, getWeeksInMonth } = functions();
-  const [test, setTest] = useState(0);
+  const [mouseX, setMouseX] = useState(0);
   //現在のdayDataをstateで管理
   const [dayData, setDayData] = useState<allDataType[]>(makeDayData());
 
   //カレンダーの月の切り替え
   const mouseDown = (e: any) => {
-    setTest(e.changedTouches[0].pageX);
+    setMouseX(e.changedTouches[0].pageX);
   }
   const mouseEnd = (e: any) => {
     //dayモーダルが開かれている時にはカレンダーの切り替えを行わない
     if (!isDayClicked) {
-      if (e.changedTouches[0].pageX - test > 0) {
+      if (e.changedTouches[0].pageX - mouseX > 0) {
         setIsLoading(!isLoading);
         if (month - 1 === 0 && year != 2024) realRouter.push("/months?year=" + (year - 1) + "&month=" + 12);
         else if (month != 1) realRouter.push("/months?year=" + (year) + "&month=" + (month - 1));
       }
-      else if (e.changedTouches[0].pageX - test < 0) {
+      else if (e.changedTouches[0].pageX - mouseX < 0) {
         setIsLoading(!isLoading);
         if (month + 1 === 13 && year != 2042) {
           realRouter.push("/months?year=" + (year + 1) + "&month=" + 1);
@@ -56,19 +60,21 @@ export default function Home() {
         transition={{ duration: 0.3, ease: easeInOut }}>
 
         <div className="row-span-1 bg-slate-100 grid grid-cols-3">
-          <div className=" relative">
-            <Link href={"/years"} className=" absolute bottom-0 text-xl">{year}</Link>
+          <div className="flex justify-center">
+            <Link href={"/years"} className="text-xl bg-white shadow-md border border-gray-300 my-auto p-2 rounded-xl">{year}</Link>
           </div>
           <p className="my-auto text-3xl text-center">{month}月</p>
         </div>
-        <div className="row-span-10 max-h-[84svh]">
+        <div className="row-span-10 relative">
           <Month
             monthData={dayData[year - 2024].months[month - 1]}
             isDayClicked={isDayClicked}
             setIsDayClicked={setIsDayClicked}
             year={year} />
         </div>
-        <div className="row-span-1 bg-sky-100"></div>
+        <Footer
+          isAddPlanClicked={isAddPlanClicked}
+          setIsAddPlanClicked={setIsAddPlanClicked} />
       </motion.div>
     </Suspense>
   )

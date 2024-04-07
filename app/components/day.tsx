@@ -44,7 +44,7 @@ const Day = ({ day, month, year }: DayProps) => {
       onClick={onClick}
       onTouchStart={stopPropagation}
       onTouchEnd={stopPropagation}
-      className={!isClicked ? "" : "text-center shadow-md rounded-lg fixed top-0 left-0 w-full h-full bg-slate-200 z-50"}
+      className={!isClicked ? "relative" : "text-center shadow-md rounded-lg fixed top-0 left-0 w-full h-full bg-slate-200 z-50"}
       // animate={isDayClicked ? { width: w, height: h } : {}}
       // style={{ originX: 0.5, originY: 0.5, scale }}
       transition={{ duration: 0.5 }}
@@ -55,6 +55,7 @@ const Day = ({ day, month, year }: DayProps) => {
           month={month}
           year={year}
         />
+        // <p className="shadow-xl absolute top-0 bottom-0 left-0 right-0">xsj</p>
         :
         <div>
         </div>
