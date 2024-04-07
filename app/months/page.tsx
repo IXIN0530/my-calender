@@ -8,7 +8,8 @@ import Month from "../components/month";
 import { useRouter } from "next/navigation";
 import { easeInOut, easeOut, motion } from "framer-motion";
 import Link from "next/link";
-import Footer from "../components/footer";
+import Footer from "../components/footer/footer";
+import AddPlanModal from "../components/footer/addPlanModal";
 
 export default function Home() {
 
@@ -76,6 +77,9 @@ export default function Home() {
           isAddPlanClicked={isAddPlanClicked}
           setIsAddPlanClicked={setIsAddPlanClicked} />
       </motion.div>
+      <AddPlanModal
+        isAddPlanClicked={isAddPlanClicked}
+        setIsAddPlanClicked={setIsAddPlanClicked} />
     </Suspense>
   )
 }

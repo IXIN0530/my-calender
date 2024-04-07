@@ -5,7 +5,7 @@ type Props = {
 
 const Footer = ({ isAddPlanClicked, setIsAddPlanClicked }: Props) => {
   return (
-    <div className="row-span-1 bg-sky-200 grid grid-cols-5 z-10">
+    <div className="row-span-1 bg-sky-200 grid grid-cols-5 z-30">
       <div className="col-span-1"></div>
       <div className="col-span-1"></div>
       <div className="col-span-1"></div>
