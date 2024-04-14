@@ -35,7 +35,7 @@ export default function Home() {
   }
   const mouseEnd = (e: any) => {
     //dayモーダルが開かれている時にはカレンダーの切り替えを行わない
-    if (!isDayClicked) {
+    if (!isDayClicked && !isAddPlanClicked) {
       if (e.changedTouches[0].pageX - mouseX > 0) {
         setIsLoading(!isLoading);
         if (month - 1 === 0 && year != 2024) realRouter.push("/months?year=" + (year - 1) + "&month=" + 12);
@@ -54,11 +54,12 @@ export default function Home() {
   console.log(dayData);
   return (
     <Suspense>
-      <motion.div className="grid grid-rows-12 min-h-[100svh] "
+      <motion.div className="grid grid-rows-10 min-h-[100svh] "
         onTouchStart={mouseDown}
         onTouchEnd={mouseEnd}
         animate={isLoading ? { opacity: [1, 0.5, 1], scale: [1, 0.9, 1] } : { opacity: [2, 0.5, 1], scale: [1, 0.91, 1] }}
-        transition={{ duration: 0.3, ease: easeInOut }}>
+        transition={{ duration: 0.3, ease: easeInOut }}
+        style={{ scale: isAddPlanClicked ? "20%" : "100%" }}>
 
         <div className="row-span-1 bg-slate-100 grid grid-cols-3">
           <div className="flex justify-center">
@@ -66,7 +67,7 @@ export default function Home() {
           </div>
           <p className="my-auto text-3xl text-center">{month}月</p>
         </div>
-        <div className="row-span-10 relative">
+        <div className="row-span-8 relative">
           <Month
             monthData={dayData[year - 2024].months[month - 1]}
             isDayClicked={isDayClicked}
@@ -77,9 +78,10 @@ export default function Home() {
           isAddPlanClicked={isAddPlanClicked}
           setIsAddPlanClicked={setIsAddPlanClicked} />
       </motion.div>
-      <AddPlanModal
-        isAddPlanClicked={isAddPlanClicked}
-        setIsAddPlanClicked={setIsAddPlanClicked} />
+      {isAddPlanClicked &&
+        <AddPlanModal
+          isAddPlanClicked={isAddPlanClicked}
+          setIsAddPlanClicked={setIsAddPlanClicked} />}
     </Suspense>
   )
 }

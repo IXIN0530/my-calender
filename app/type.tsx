@@ -13,9 +13,13 @@ export type allDataType = {
 }
 
 export type planType = {
-  beginDate: [number, number, number],
-  endDate: [number, number, number],
   beginTime: [number, number],
   endTime: [number, number],
   title: string,
+}
+
+//予定を加えるときその重要度を表すものも追加
+export type planMenuProps = {
+  planDetail: planType,
+  isImportant: boolean,
 }
