@@ -2,7 +2,7 @@
 import { useEffect, useState, useRef } from "react";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
-import { allDataType } from "../type";
+import { allDataType, planType } from "../type";
 import functions from "../functions/functions";
 import Month from "../components/month";
 import { useRouter } from "next/navigation";
@@ -28,6 +28,12 @@ export default function Home() {
   const [mouseX, setMouseX] = useState(0);
   //現在のdayDataをstateで管理
   const [dayData, setDayData] = useState<allDataType[]>(makeDayData());
+
+  //予定追加
+  //何の予定を追加するか
+  const [whatToSet, setWhatToSet] = useState<planType>({ beginTime: [0, 0], endTime: [0, 0], title: "" });
+  //追加する予定が選択されているか
+  const [isPlanSelected, setIsPlanSelected] = useState<boolean>(false);
 
   //カレンダーの月の切り替え
   const mouseDown = (e: any) => {
@@ -81,7 +87,12 @@ export default function Home() {
       {isAddPlanClicked &&
         <AddPlanModal
           isAddPlanClicked={isAddPlanClicked}
-          setIsAddPlanClicked={setIsAddPlanClicked} />}
+          setIsAddPlanClicked={setIsAddPlanClicked}
+          isPlanSelected={isPlanSelected}
+          setIsPlanSelected={setIsPlanSelected}
+          whatToSet={whatToSet}
+          setWhatToSet={setWhatToSet}
+        />}
     </Suspense>
   )
 }

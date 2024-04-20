@@ -6,13 +6,23 @@ import PlanList from "./planList";
 type Props = {
   isAddPlanClicked: boolean,
   setIsAddPlanClicked: (isAddPlanClicked: boolean) => void,
+  isPlanSelected: boolean,
+  setIsPlanSelected: (isPlanSelected: boolean) => void,
+  whatToSet: planType,
+  setWhatToSet: (whatToSet: planType) => void,
 }
 
 type planMenuProps = {
   planDetail: planType,
   isImportant: boolean,
 }
-const AddPlanModal = ({ isAddPlanClicked, setIsAddPlanClicked }: Props) => {
+const AddPlanModal = ({
+  isAddPlanClicked,
+  setIsAddPlanClicked,
+  isPlanSelected,
+  setIsPlanSelected,
+  whatToSet,
+  setWhatToSet }: Props) => {
 
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const titleObj = useRef<HTMLInputElement>(null);
@@ -85,6 +95,11 @@ const AddPlanModal = ({ isAddPlanClicked, setIsAddPlanClicked }: Props) => {
                       plans={plans}
                       setPlans={setPlans}
                       index={index}
+                      isPlanSelected={isPlanSelected}
+                      setIsPlanSelected={setIsPlanSelected}
+                      whatToSet={whatToSet}
+                      setWhatToSet={setWhatToSet}
+                      setIsAddPlanClicked={setIsAddPlanClicked}
                     />
                     {/* <p className="col-span-2 my-auto text-center bg-rose-500 rounded-lg text-white p-1">削除</p> */}
                   </div>)
