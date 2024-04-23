@@ -70,8 +70,10 @@ export default function Home() {
   }
   console.log(dayData);
   return (
-    <Suspense>
-      <Search />
+    <div>
+      <Suspense>
+        <Search />
+      </Suspense>
       <motion.div className="grid grid-rows-10 min-h-[100svh] "
         onTouchStart={mouseDown}
         onTouchEnd={mouseEnd}
@@ -105,6 +107,6 @@ export default function Home() {
           whatToSet={whatToSet}
           setWhatToSet={setWhatToSet}
         />}
-    </Suspense>
+    </div>
   )
 }
