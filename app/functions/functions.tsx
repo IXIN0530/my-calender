@@ -40,8 +40,6 @@ const functions = () => {
         for (let k = 0; k < 31; k++) {
           //閏年
           const dmeoPlan: planType = {
-            beginDate: [2024, 1, 1],
-            endDate: [2024, 1, 2],
             beginTime: [0, 0],
             endTime: [2, 0],
             title: "hello",
