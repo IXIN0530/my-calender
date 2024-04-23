@@ -15,10 +15,21 @@ export default function Home() {
 
   const realRouter = useRouter();
   const router = useSearchParams();
-  const year: number = router.get("year") ? Number(router.get("year")) : -1;
-  const month: number = router.get("month") ? Number(router.get("month")) : -1;
+  // const year: number = router.get("year") ? Number(router.get("year")) : -1;
+  // const month: number = router.get("month") ? Number(router.get("month")) : -1;
   //ページ遷移関連
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const [year, setYear] = useState<number>(2024);
+  const [month, setMonth] = useState<number>(1);
+
+  const Search = () => {
+    const _year: number = router.get("year") ? Number(router.get("year")) : -1;
+    const _month: number = router.get("month") ? Number(router.get("month")) : -1;
+    setMonth(_month);
+    setYear(_year);
+    return <></>
+  }
 
   //footer関連（特に予定追加モーダルボタン）
   const [isAddPlanClicked, setIsAddPlanClicked] = useState<boolean>(false);
@@ -60,6 +71,7 @@ export default function Home() {
   console.log(dayData);
   return (
     <Suspense>
+      <Search />
       <motion.div className="grid grid-rows-10 min-h-[100svh] "
         onTouchStart={mouseDown}
         onTouchEnd={mouseEnd}
