@@ -11,10 +11,11 @@ type DayProps = {
   },
   month: number,
   year: number,
+  isPlanSelected: boolean,
 }
 
 
-const Day = ({ day, month, year }: DayProps) => {
+const Day = ({ day, month, year, isPlanSelected }: DayProps) => {
   const [scale, setScale] = useState(1);
   const [isClicked, setIsClicked] = useState(false);
   const onClick = (e: any) => {
@@ -44,16 +45,19 @@ const Day = ({ day, month, year }: DayProps) => {
       onClick={onClick}
       onTouchStart={stopPropagation}
       onTouchEnd={stopPropagation}
-      className={!isClicked ? "relative" : "text-center shadow-md rounded-lg fixed top-0 left-0 w-full h-full bg-slate-200 z-50"}
+      className={!isClicked ? "relative bg-slate-200" : "text-center shadow-md rounded-lg fixed top-0 left-0 w-full h-full bg-slate-200 z-50"}
       // animate={isDayClicked ? { width: w, height: h } : {}}
       // style={{ originX: 0.5, originY: 0.5, scale }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: 0.5 }
+      }
+      style={{ filter: isPlanSelected ? "brightness(0.7)" : "" }}
     >
       {!isClicked ?
         <MiniDay
           day={day}
           month={month}
           year={year}
+          isPlanSelected={isPlanSelected}
         />
         // <p className="shadow-xl absolute top-0 bottom-0 left-0 right-0">xsj</p>
         :

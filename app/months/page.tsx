@@ -52,7 +52,8 @@ export default function Home() {
   }
   const mouseEnd = (e: any) => {
     //dayモーダルが開かれている時にはカレンダーの切り替えを行わない
-    if (!isDayClicked && !isAddPlanClicked) {
+    //追加で予定を追加するモードの時もカレンダーの切り替えを行わない
+    if (!isDayClicked && !isAddPlanClicked && !isPlanSelected) {
       if (e.changedTouches[0].pageX - mouseX > 0) {
         setIsLoading(!isLoading);
         if (month - 1 === 0 && year != 2024) realRouter.push("/months?year=" + (year - 1) + "&month=" + 12);
@@ -65,21 +66,46 @@ export default function Home() {
         }
         else if (month != 12) realRouter.push("/months?year=" + (year) + "&month=" + (month + 1));
       }
-      console.log(isLoading);
+      // console.log(isLoading);
     }
   }
-  console.log(dayData);
+  // console.log(dayData);
+  console.log(whatToSet, isPlanSelected);
   return (
     <div>
       <Suspense>
         <Search />
       </Suspense>
+
+      <motion.div className=" z-10 fixed bg-white left-0 w-full h-[10%] flex flex-col justify-center"
+        style={{}}
+        initial={{ top: "-20%" }}
+        animate={{
+          top: isPlanSelected ? "0%" : "-20%",
+          transition: { duration: 0.3, ease: easeInOut },
+        }}>
+        <p className="text-center ">予定を追加する日を選んでください</p>
+      </motion.div>
+
+      <motion.div className=" flex flex-col justify-center z-40 fixed bg-sky-300 bottom-0 left-0 bg-opacity-0 h-[10%] w-full"
+        initial={{ bottom: "-20%" }}
+        animate={{
+          bottom: isPlanSelected ? "0%" : "-20%",
+          transition: { duration: 0.2 },
+        }}>
+        <button className="block m-auto py-4 px-8 bg-orange-600 rounded-xl text-lg font-bold shadow-md text-white"
+          onClick={() => setIsPlanSelected(false)}>完了</button>
+      </motion.div>
       <motion.div className="grid grid-rows-10 min-h-[100svh] "
         onTouchStart={mouseDown}
         onTouchEnd={mouseEnd}
         animate={isLoading ? { opacity: [1, 0.5, 1], scale: [1, 0.9, 1] } : { opacity: [2, 0.5, 1], scale: [1, 0.91, 1] }}
         transition={{ duration: 0.3, ease: easeInOut }}
-        style={{ scale: isAddPlanClicked ? "20%" : "100%" }}>
+        style={{
+          scale: isAddPlanClicked ? "20%" : "100%",
+        }}>
+
+
 
         <div className="row-span-1 bg-slate-100 grid grid-cols-3">
           <div className="flex justify-center">
@@ -92,11 +118,13 @@ export default function Home() {
             monthData={dayData[year - 2024].months[month - 1]}
             isDayClicked={isDayClicked}
             setIsDayClicked={setIsDayClicked}
-            year={year} />
+            year={year}
+            isPlanSelected={isPlanSelected} />
         </div>
         <Footer
           isAddPlanClicked={isAddPlanClicked}
-          setIsAddPlanClicked={setIsAddPlanClicked} />
+          setIsAddPlanClicked={setIsAddPlanClicked}
+          isPlanSelected={isPlanSelected} />
       </motion.div>
       {isAddPlanClicked &&
         <AddPlanModal
