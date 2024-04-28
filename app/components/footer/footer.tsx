@@ -8,7 +8,7 @@ const Footer = ({ isAddPlanClicked, setIsAddPlanClicked, isPlanSelected }: Props
   return (
     <div className="row-span-1 bg-sky-200 grid grid-cols-5 z-30"
       style={{ filter: isPlanSelected ? "brightness(0.7)" : "" }}>
-      <div className="col-span-1">下1/10</div>
+      <div className="col-span-1"></div>
       <div className="col-span-1"></div>
       <div className="col-span-1"></div>
       <div className="col-span-1"></div>

@@ -21,7 +21,7 @@ const MiniDay = ({ day, month, year, isPlanSelected }: DayProps) => {
       <div></div>
       {day.plans.map((plan, index) => {
         if (index >= 4) return null;
-        return <p className="bg-sky-300 rounded-md text-xs">{plan.title}</p>
+        return <p className="bg-sky-300 rounded-md text-xs">{plan.title.slice(0, 4)}</p>
       })}
     </div>
   )
