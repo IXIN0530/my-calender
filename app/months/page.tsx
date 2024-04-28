@@ -1,5 +1,5 @@
 "use client"
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, use } from "react";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 import { allDataType, planType } from "../type";
@@ -15,6 +15,7 @@ export default function Home() {
 
   const realRouter = useRouter();
   const router = useSearchParams();
+  const didMount = useRef(false);
   // const year: number = router.get("year") ? Number(router.get("year")) : -1;
   // const month: number = router.get("month") ? Number(router.get("month")) : -1;
   //ページ遷移関連
@@ -70,7 +71,18 @@ export default function Home() {
     }
   }
   // console.log(dayData);
-  console.log(whatToSet, isPlanSelected);
+  // console.log(whatToSet, isPlanSelected);
+
+  useEffect(() => {
+    //予定候補が追加されたときに保存する
+    if (!didMount.current) {
+      didMount.current = true;
+      localStorage.getItem("dayData") ? setDayData(JSON.parse(localStorage.getItem("dayData")!)) : false;
+    }
+    else {
+      localStorage.setItem("dayData", JSON.stringify(dayData));
+    }
+  }, [dayData])
   return (
     <div>
       <Suspense>
@@ -119,7 +131,10 @@ export default function Home() {
             isDayClicked={isDayClicked}
             setIsDayClicked={setIsDayClicked}
             year={year}
-            isPlanSelected={isPlanSelected} />
+            isPlanSelected={isPlanSelected}
+            dayData={dayData}
+            setDayData={setDayData}
+            whatToSet={whatToSet} />
         </div>
         <Footer
           isAddPlanClicked={isAddPlanClicked}

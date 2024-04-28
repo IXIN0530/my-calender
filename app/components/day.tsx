@@ -2,7 +2,7 @@
 import { motion } from "framer-motion"
 import { useEffect, useState } from "react"
 import MiniDay from "./miniDay"
-import { planType } from "../type"
+import { allDataType, planType } from "../type"
 type DayProps = {
   day: {
     date: number,
@@ -12,33 +12,42 @@ type DayProps = {
   month: number,
   year: number,
   isPlanSelected: boolean,
+  dayData: allDataType[],
+  setDayData: (dayData: allDataType[]) => void,
+  whatToSet: planType,
 }
 
 
-const Day = ({ day, month, year, isPlanSelected }: DayProps) => {
+const Day = ({ day, month, year, isPlanSelected, dayData, setDayData, whatToSet }: DayProps) => {
   const [scale, setScale] = useState(1);
   const [isClicked, setIsClicked] = useState(false);
+  //予定を追加する時にこの日が選択されているかを管理するstate
+  const [isAddPlanClicked, setIsAddPlanClicked] = useState(false);
   const onClick = (e: any) => {
-    if (!isClicked) setIsClicked(true);
-    else setIsClicked(false);
+    //予定追加モードの時
+    if (isPlanSelected) {
+      setIsAddPlanClicked(!isAddPlanClicked);
+    }
+    else {
+      setIsClicked(!isClicked);
+    }
   }
   //伝搬を防ぐための関数
   const stopPropagation = (e: any) => {
     if (isClicked) e.stopPropagation();
   }
   useEffect(() => {
-    const h = window.innerHeight;
-    const w_0 = document.getElementById("day")?.clientWidth ?? 0;
-    const w = window.innerWidth;
-    setScale(w / w_0);
-    // if (isDayClicked) {
-    //   console.log("dayがクリックされています");
-    // }
-    // else {
-    //   console.log("dayがクリックされていません");
+    //予定を追加する時
+    if (isAddPlanClicked) {
+      // day.plans.push({ beginTime: [0, 0], endTime: [0, 0], title: "test" });
+      const _dayData = [...dayData];
+      _dayData[year - 2024].months[month - 1].days[day.date - 1].plans.push(whatToSet);
+      setDayData(_dayData);
+      // console.log(_dayData, "に更新しました");
+    }
+    setIsAddPlanClicked(false);
+  }, [isPlanSelected])
 
-    // }
-  })
   return (
     <motion.div
       id="day"
@@ -50,7 +59,7 @@ const Day = ({ day, month, year, isPlanSelected }: DayProps) => {
       // style={{ originX: 0.5, originY: 0.5, scale }}
       transition={{ duration: 0.5 }
       }
-      style={{ filter: isPlanSelected ? "brightness(0.7)" : "" }}
+      style={{ filter: (isPlanSelected && !isAddPlanClicked) ? "brightness(0.7)" : "" }}
     >
       {!isClicked ?
         <MiniDay

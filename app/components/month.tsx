@@ -1,5 +1,5 @@
 import functions from "../functions/functions";
-import { monthDataType } from "../type";
+import { allDataType, monthDataType, planType } from "../type";
 import Day from "./day";
 import { motion } from "framer-motion";
 type Props = {
@@ -8,9 +8,20 @@ type Props = {
   setIsDayClicked: (isDayClicked: boolean) => void,
   year: number,
   isPlanSelected: boolean,
+  dayData: allDataType[],
+  setDayData: (dayData: allDataType[]) => void,
+  whatToSet: planType,
 }
 const day = ["日", "月", "火", "水", "木", "金", "土"];
-const Month = ({ monthData, isDayClicked, setIsDayClicked, year, isPlanSelected }: Props) => {
+const Month = ({ monthData,
+  isDayClicked,
+  setIsDayClicked,
+  year,
+  isPlanSelected,
+  dayData,
+  setDayData,
+  whatToSet,
+}: Props) => {
   const temp = [];
   for (let i = 0; i < monthData.days[0].day; i++) {
     temp.push(1);
@@ -31,6 +42,10 @@ const Month = ({ monthData, isDayClicked, setIsDayClicked, year, isPlanSelected 
             month={monthData.month}
             year={year}
             isPlanSelected={isPlanSelected}
+            dayData={dayData}
+            setDayData={setDayData}
+            whatToSet={whatToSet}
+
           />
         })}
       </div>

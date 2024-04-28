@@ -68,7 +68,15 @@ const AddPlanModal = ({
       localStorage.getItem("plans") ? setPlans(JSON.parse(localStorage.getItem("plans")!)) : setPlans([]);
     }
     else {
-      localStorage.setItem("plans", JSON.stringify(plans));
+      const _plans = [...plans];
+      //重要度順に並べ替える
+      _plans.sort((a, b) => {
+        //戻り値が正の時、並べ替える。
+        const aImportance = a.isImportant ? 1 : 0;
+        const bImportance = b.isImportant ? 1 : 0;
+        return bImportance - aImportance;
+      });
+      localStorage.setItem("plans", JSON.stringify(_plans));
     }
     console.log(plans);
   }, [plans]);
@@ -88,6 +96,7 @@ const AddPlanModal = ({
             {/* 以下、追加する予定を置いておくためのmodal */}
             <div className="row-span-6 bg-slate-300 grid grid-cols-2 grid-rows-4">
               {plans.map((plan, index) => {
+                if (index >= 8) return null;
                 return (
                   <div className="grid grid-cols-10 justify-between m-2 ">
                     <PlanList
