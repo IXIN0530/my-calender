@@ -65,7 +65,7 @@ const functions = () => {
                 break;
               }
             }
-            dayData[i].months[j].days.push({ date: k + 1, day: 0, plans: [dmeoPlan] });
+            dayData[i].months[j].days.push({ date: k + 1, day: 0, plans: [] });
           }
         }
       }

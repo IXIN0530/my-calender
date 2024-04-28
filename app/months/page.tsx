@@ -34,7 +34,7 @@ export default function Home({ searchParams }: Props) {
   const [isAddPlanClicked, setIsAddPlanClicked] = useState<boolean>(false);
 
   const [isDayClicked, setIsDayClicked] = useState<boolean>(false);
-  const { makeDayData, getWeeksInMonth } = functions();
+  const { makeDayData } = functions();
   const [mouseX, setMouseX] = useState(0);
   //現在のdayDataをstateで管理
   const [dayData, setDayData] = useState<allDataType[]>(makeDayData());
@@ -81,6 +81,7 @@ export default function Home({ searchParams }: Props) {
   return (
     <div>
       <Search />
+      <button onClick={() => (localStorage.removeItem("dayData"))}>予定を全消去</button>
       <motion.div className=" z-10 fixed bg-white left-0 w-full h-[10%] flex flex-col justify-center"
         style={{}}
         initial={{ top: "-20%" }}

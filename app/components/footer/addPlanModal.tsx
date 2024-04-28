@@ -1,7 +1,7 @@
 "use client"
 import { planType } from "@/app/type";
 import { motion } from "framer-motion";
-import { FormEvent, MouseEvent, useEffect, useRef, useState } from "react"
+import { MouseEvent, useEffect, useRef, useState } from "react"
 import PlanList from "./planList";
 type Props = {
   isAddPlanClicked: boolean,

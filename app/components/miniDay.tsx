@@ -1,8 +1,4 @@
-"use client"
-import { stringify } from "querystring";
-import functions from "../functions/functions";
 import { planType } from "../type";
-import { useState } from "react";
 type DayProps = {
   day: {
     date: number,

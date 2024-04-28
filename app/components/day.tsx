@@ -39,11 +39,9 @@ const Day = ({ day, month, year, isPlanSelected, dayData, setDayData, whatToSet 
   useEffect(() => {
     //予定を追加する時
     if (isAddPlanClicked) {
-      // day.plans.push({ beginTime: [0, 0], endTime: [0, 0], title: "test" });
       const _dayData = [...dayData];
       _dayData[year - 2024].months[month - 1].days[day.date - 1].plans.push(whatToSet);
       setDayData(_dayData);
-      // console.log(_dayData, "に更新しました");
     }
     setIsAddPlanClicked(false);
   }, [isPlanSelected])
@@ -55,8 +53,6 @@ const Day = ({ day, month, year, isPlanSelected, dayData, setDayData, whatToSet 
       onTouchStart={stopPropagation}
       onTouchEnd={stopPropagation}
       className={!isClicked ? "relative bg-slate-200" : "text-center shadow-md rounded-lg fixed top-0 left-0 w-full h-full bg-slate-200 z-50"}
-      // animate={isDayClicked ? { width: w, height: h } : {}}
-      // style={{ originX: 0.5, originY: 0.5, scale }}
       transition={{ duration: 0.5 }
       }
       style={{ filter: (isPlanSelected && !isAddPlanClicked) ? "brightness(0.7)" : "" }}
@@ -68,7 +64,6 @@ const Day = ({ day, month, year, isPlanSelected, dayData, setDayData, whatToSet 
           year={year}
           isPlanSelected={isPlanSelected}
         />
-        // <p className="shadow-xl absolute top-0 bottom-0 left-0 right-0">xsj</p>
         :
         <div>
         </div>
