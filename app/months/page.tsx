@@ -81,7 +81,7 @@ export default function Home({ searchParams }: Props) {
   return (
     <div>
       <Search />
-      <button onClick={() => (localStorage.removeItem("dayData"))}>予定を全消去</button>
+      {/* <button onClick={() => (localStorage.removeItem("dayData"))}>予定を全消去</button> */}
       <motion.div className=" z-10 fixed bg-white left-0 w-full h-[10%] flex flex-col justify-center"
         style={{}}
         initial={{ top: "-20%" }}
