@@ -43,7 +43,7 @@ const PlanList = ({
       </div>
       <p className="text-center col-span-8 border border-gray-400 bg-white rounded-lg"
         onClick={handleClick}>
-        {planMenu.planDetail.title}
+        {planMenu.planDetail.title.slice(0, 10)}
       </p>
     </motion.div>
   )
