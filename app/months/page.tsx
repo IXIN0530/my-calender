@@ -1,32 +1,30 @@
 "use client"
-import { useEffect, useState, useRef, use } from "react";
-import { useSearchParams } from "next/navigation";
-import { Suspense } from "react";
+import { useEffect, useState, useRef } from "react";
 import { allDataType, planType } from "../type";
 import functions from "../functions/functions";
 import Month from "../components/month";
 import { useRouter } from "next/navigation";
-import { easeInOut, easeOut, motion } from "framer-motion";
+import { easeInOut, motion } from "framer-motion";
 import Link from "next/link";
 import Footer from "../components/footer/footer";
 import AddPlanModal from "../components/footer/addPlanModal";
 
-export default function Home() {
+type Props = {
+  searchParams: { [key: string]: string[] | string[] },
+}
+export default function Home({ searchParams }: Props) {
 
   const realRouter = useRouter();
-  const router = useSearchParams();
   const didMount = useRef(false);
-  // const year: number = router.get("year") ? Number(router.get("year")) : -1;
-  // const month: number = router.get("month") ? Number(router.get("month")) : -1;
   //ページ遷移関連
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const [year, setYear] = useState<number>(2024);
-  const [month, setMonth] = useState<number>(1);
+  const [year, setYear] = useState<number>(Number(searchParams.year));
+  const [month, setMonth] = useState<number>(Number(searchParams.month));
 
   const Search = () => {
-    const _year: number = router.get("year") ? Number(router.get("year")) : -1;
-    const _month: number = router.get("month") ? Number(router.get("month")) : -1;
+    const _year = Number(searchParams.year);
+    const _month = Number(searchParams.month);
     setMonth(_month);
     setYear(_year);
     return <></>
@@ -67,11 +65,8 @@ export default function Home() {
         }
         else if (month != 12) realRouter.push("/months?year=" + (year) + "&month=" + (month + 1));
       }
-      // console.log(isLoading);
     }
   }
-  // console.log(dayData);
-  // console.log(whatToSet, isPlanSelected);
 
   useEffect(() => {
     //予定候補が追加されたときに保存する
@@ -85,10 +80,7 @@ export default function Home() {
   }, [dayData])
   return (
     <div>
-      <Suspense>
-        <Search />
-      </Suspense>
-
+      <Search />
       <motion.div className=" z-10 fixed bg-white left-0 w-full h-[10%] flex flex-col justify-center"
         style={{}}
         initial={{ top: "-20%" }}
@@ -116,8 +108,6 @@ export default function Home() {
         style={{
           scale: isAddPlanClicked ? "20%" : "100%",
         }}>
-
-
 
         <div className="row-span-1 bg-slate-100 grid grid-cols-3">
           <div className="flex justify-center">
